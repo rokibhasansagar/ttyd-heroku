@@ -22,6 +22,7 @@ RUN apt-get update; apt-get install -y --no-install-recommends \
         curl \
         htop \
         net-tools \
+        fakeroot \
         && apt-get autoclean \
         && apt-get autoremove \
         && pip3 install gdown \
@@ -38,4 +39,4 @@ ENV LOGIN_PASSWORD admin
 
 ENTRYPOINT ["/sbin/tini", "--"]
 #CMD ["ttyd", "bash"]
-CMD while true; do ttyd --port $PORT --credential $LOGIN_USER:$LOGIN_PASSWORD bash; sleep 2; done
+CMD while true; do fakeroot -- bash start.sh; sleep 2; done
