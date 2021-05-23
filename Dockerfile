@@ -29,7 +29,7 @@ RUN apt-get update; apt-get install -y --no-install-recommends \
         && pip3 install speedtest-cli \
         && rm -rf /var/lib/apt/lists/*
     
-    
+COPY . .    
 ADD ./mc /app/mc
 RUN chmod +x /app/mc && mv /app/mc /usr/local/bin/
 ENV LOGIN_USER admin
