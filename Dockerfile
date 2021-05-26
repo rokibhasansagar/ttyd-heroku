@@ -8,6 +8,7 @@ COPY --from=0 /ttyd/build/ttyd /usr/bin/ttyd
 ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /sbin/tini
 RUN chmod +x /sbin/tini
 
+ENV TZ=UTC
 RUN apt-get update; apt-get install -qy --no-install-recommends \
         python3 \
 	python3-setuptools \
