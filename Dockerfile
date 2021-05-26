@@ -11,7 +11,8 @@ RUN chmod +x /sbin/tini
 ENV TZ=UTC TERM=xterm-256color
 
 RUN apt-get update -qy \
-    && apt-get install -qy --no-install-recommends xterm tzdata systemd && timedatectl set-timezone ${TZ} \
+    && apt-get install -qy --no-install-recommends tzdata \
+    && ln -fs /usr/share/zoneinfo/UTC /etc/localtime && dpkg-reconfigure -f noninteractive tzdata \
     && apt-get install -qy --no-install-recommends \
         python3 \
         python3-setuptools \
@@ -29,6 +30,7 @@ RUN apt-get update -qy \
         net-tools \
         fakeroot \
         git \
+        xterm \
     && apt-get autoclean -qy \
     && apt-get autoremove -qy \
     && pip3 install gdown \
