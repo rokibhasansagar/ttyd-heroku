@@ -11,7 +11,7 @@ RUN chmod +x /sbin/tini
 ENV TZ=UTC TERM=xterm-256color
 
 RUN apt-get update -qy \
-    && apt-get install -qy --no-install-recommends xterm tzdata && timedatectl set-timezone ${TZ} \
+    && apt-get install -qy --no-install-recommends xterm tzdata systemd && timedatectl set-timezone ${TZ} \
     && apt-get install -qy --no-install-recommends \
         python3 \
         python3-setuptools \
