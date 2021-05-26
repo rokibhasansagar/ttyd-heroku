@@ -8,30 +8,33 @@ COPY --from=0 /ttyd/build/ttyd /usr/bin/ttyd
 ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /sbin/tini
 RUN chmod +x /sbin/tini
 
-ENV TZ=UTC
-RUN apt-get update; apt-get install -qy --no-install-recommends \
+ENV TZ=UTC TERM=xterm-256color
+
+RUN apt-get update -qy \
+    && apt-get install -qy --no-install-recommends xterm tzdata && timedatectl set-timezone ${TZ} \
+    && apt-get install -qy --no-install-recommends \
         python3 \
-	python3-setuptools \
-	python3-pip \
-	zip \
-	unzip \
-	p7zip-full \
-	wget \
-	nano \
-	detox \
-	tmux \
+        python3-setuptools \
+        python3-pip \
+        zip \
+        unzip \
+        p7zip-full \
+        wget \
+        nano \
+        detox \
+        tmux \
         curl \
-	aria2 \
+        aria2 \
         htop \
         net-tools \
         fakeroot \
-	git \
-        && apt-get autoclean \
-        && apt-get autoremove \
-        && pip3 install gdown \
-        && pip3 install speedtest-cli \
-        && rm -rf /var/lib/apt/lists/*
-    
+        git \
+    && apt-get autoclean -qy \
+    && apt-get autoremove -qy \
+    && pip3 install gdown \
+    && pip3 install speedtest-cli \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY . .    
 ADD ./mc /app/mc
 RUN chmod +x /app/mc && mv /app/mc /usr/local/bin/
